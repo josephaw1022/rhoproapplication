@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Monda&display=swap");
+
+html,
+body,
+#root {
+    height: 100vh;
+    width: 100vw;
+    font-family: "Monda", sans-serif;
+}
+
+.icon {
+    color: #fff;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+    outline: none !important;
+}
