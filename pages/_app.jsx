@@ -2,6 +2,7 @@ import "../style/tailwindconfig.css";
 import "../style/global.scss";
 import { Provider } from "react-redux";
 import { store } from "../redux";
+
 import AWS from "aws-sdk";
 
 AWS.config.update({
