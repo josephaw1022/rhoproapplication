@@ -1,6 +1,6 @@
 // import { db } from "../utils/client-db";
 
-import {db} from "../utils/auroradb"
+import { db } from "../utils/auroradb";
 const defaultFields = {
 	idField: "id",
 	voidField: "pvVoid",
@@ -47,11 +47,9 @@ export default class Database {
 	}
 
 	async delete(id) {
-		return await db.raw(
-			`UPDATE ${this.tableName} SET ${this.voidField} WHERE ${
-				this.idField
-			} = ${String(id)} ;`
-		);
+		return await db.raw(`UPDATE ${this.tableName} SET ${
+				this.voidField
+			} = true  WHERE ${this.idField} = '${String(id)}' ;`
+		) 
 	}
 }
-
