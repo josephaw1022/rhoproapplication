@@ -11,6 +11,8 @@ module.exports = {
 		AWS_SECRET_ACCESS_KEY_APP:
 			"AzT2lRlJ+BBmceGDPjiwGD7kIpty6dpQ5jmUaHDH",
 	},
+	swcMinify: true
+
 
 	
 };
