@@ -6,6 +6,6 @@ const eventDB = new Database("events", {
 });
 
 export default async function handler(req, res) {
-	let { records } = await eventDB.getAll();
+	let records = await eventDB.getAll();
 	res.status(200).json(records);
 }
