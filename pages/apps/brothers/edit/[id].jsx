@@ -12,6 +12,7 @@ import { LoadingOrError } from "../../../../components/layout/LoadingOrError";
 import { Navbar } from "../../../../components/navbar/Navbar";
 import { getBrother } from "../../../../redux/entities/users/user.thunks";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { updateBrother } from "../../../../redux/entities/users/user.thunks";
 
 export const BrotherEdit = ({ newEntry, ...props }) => {
 	const dispatch = useDispatch();
@@ -26,6 +27,13 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 				fieldName: "name",
 				label: "Name",
 				type: "text",
+				value: brother.name,
+			},
+			{
+				fieldName: "cell_phone",
+				label: "Cellphone",
+				type: "tel",
+				value: brother.cell_phone,
 			},
 		],
 		[
@@ -33,17 +41,26 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 				fieldName: "scroll_number",
 				label: "Scroll Number",
 				type: "number",
+				value: brother.scroll_number,
 			},
 			{
 				fieldName: "email",
 				label: "Email",
 				type: "email",
+				value: brother.email,
 			},
 		],
 	];
 
 	const handleSubmit = values => {
-		console.log(values);
+		dispatch(
+			updateBrother({
+				...values,
+				callback: () => {
+					router.push(`/apps/brothers/${id}`);
+				},
+			})
+		);
 	};
 
 	const validation = {
@@ -53,7 +70,6 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 	};
 
 	useEffect(() => {
-		console.log(id);
 		dispatch(
 			getBrother({
 				id,
@@ -68,7 +84,9 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 
 	const handleGoBack = () => navigate.push(`/apps/brothers/${id}`);
 
-	const handleMenuClick = () => {};
+	const handleMenuClick = () => {
+		dispatch();
+	};
 
 	return (
 		<>
