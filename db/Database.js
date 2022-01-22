@@ -21,12 +21,12 @@ export default class Database {
 	}
 
 	async getOne(id) {
-		let dbResponse = db(this.tableName)
-			.select()
-			.where(this.idField, id);
-		return dbResponse.then(rows => {
-			return rows[0];
-		});
+		let dbResponse = await db.raw(
+			`SELECT * FROM ${this.tableName} WHERE ${
+				this.idField
+			} = '${String(id)}'`
+		);
+		return dbResponse.records[0]
 	}
 
 	async create(body) {
@@ -38,18 +38,18 @@ export default class Database {
 	}
 
 	async update(body, id) {
-		db(this.tableName)
+		let resp = await db(this.tableName)
 			.where({ id })
 			.update({ ...body });
-		return db.then(() => {
-			return { success: true };
-		});
+		console.log(resp)
+		return resp 
 	}
 
 	async delete(id) {
-		return await db.raw(`UPDATE ${this.tableName} SET ${
-				this.voidField
-			} = true  WHERE ${this.idField} = '${String(id)}' ;`
-		) 
+		return await db.raw(
+			`UPDATE ${this.tableName} SET ${this.voidField} = true  WHERE ${
+				this.idField
+			} = '${String(id)}' ;`
+		);
 	}
 }
