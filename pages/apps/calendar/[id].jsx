@@ -6,12 +6,12 @@ import {
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FormTemplateComponent } from "../../../components/form/Template";
 import { NavAndTab } from "../../../components/layout/NavAndTab";
 import NavMenu from "../../../components/navbar/NavMenu";
-import { getEvent } from "../../../redux/entities/events/events.thunks";
+import { getEvent } from "../../../redux/entities/calendar/calendar.thunks";
 
 export default function ViewEvent() {
 	const [loading, setLoading] = useState();
@@ -35,7 +35,7 @@ export default function ViewEvent() {
 			label: "Jobs",
 			icon: <WorkIcon className={tab == "Jobs" ? "icon" : null} />,
 			onClick: () => {
-				navigate("jobs");
+				router.push("jobs");
 			},
 		},
 	];
@@ -43,7 +43,7 @@ export default function ViewEvent() {
 		{
 			label: "Edit",
 			props: {
-				onClick: () => router.push(`/apps/events/edit/${id}`),
+				onClick: () => router.push(`/apps/calendar/edit/${id}`),
 			},
 		},
 	];
@@ -78,17 +78,16 @@ export default function ViewEvent() {
 			getEvent({
 				id: id,
 				callback: (err, resp) => {
-		
-					setEvent(resp);
-					setLoading(false);
+					if (resp) setEvent(resp);
 					if (err) setError(true);
+					setLoading(false);
 				},
 			})
 		);
 	}, []);
 
 	const handleGoBack = () => {
-		router.push("/apps/events");
+		router.push("/apps/calendar");
 	};
 
 	const handleMoreClick = event => {

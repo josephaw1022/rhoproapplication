@@ -32,8 +32,8 @@ const [drawer, setDrawer] = useState(false);
 					}}
 					title="View Events"
 					columns={EventCols}
-					url={`/api/events`}
-					entity="events"
+					url={`/api/calendar`}
+					entity="calendar"
 				/>
 			</div>
 		</>

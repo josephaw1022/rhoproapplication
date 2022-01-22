@@ -1,7 +1,7 @@
-const knexDataApiClient = require("knex-aurora-data-api-client");
+const knexDataApiClient = require("knex-data-api-client");
 
 export const db = require("knex")({
-	client: knexDataApiClient.postgres,
+	client: knexDataApiClient,
 	connection: {
 		secretArn: process.env.SECRET_ARN,
 		resourceArn: process.env.CLUSTER_ARN, // Required
