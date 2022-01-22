@@ -19,16 +19,16 @@ export const getBrother = createAsyncThunk(
 );
 
 export const updateBrother = createAsyncThunk(
-	"update brother",
+	"update/brother",
 	async ({ callback, ...payload }) => {
 		try {
-			console.log(payload)
-			const response = await request.put(
+			console.log("payload = ", payload);
+			const {data} = await request.put(
 				`/api/brothers/${payload.id}`,
 				payload
 			);
-			console.log(response);
-			callback(null, response.data);
+			
+			callback(null, data);
 		} catch (err) {
 			callback(err, null);
 		}

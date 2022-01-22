@@ -57,10 +57,11 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 			updateBrother({
 				...values,
 				callback: () => {
-					router.push(`/apps/brothers/${id}`);
+					
 				},
 			})
 		);
+		navigate.push(`/apps/brothers/${id}`);
 	};
 
 	const validation = {

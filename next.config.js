@@ -10,7 +10,7 @@ module.exports = {
 		AWS_ACCESS_KEY_APP: "AKIAYMTC5Q4HB2PEDF7H",
 		AWS_SECRET_ACCESS_KEY_APP:
 			"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",
+		DB_NAME: "backend",
 	},
-
-	
+	swcMinify: true,
 };
