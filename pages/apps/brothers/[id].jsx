@@ -55,6 +55,12 @@ export default function ViewBrother() {
 				type: "text",
 				value: brother.name,
 			},
+			{
+				fieldName: "cell_phone",
+				label: "Cellphone",
+				type: "tel",
+				value: brother.cell_phone,
+			},
 		],
 		[
 			{
