@@ -5,7 +5,7 @@ const brotherDB = new Database("brothers", {
 	voidField: "deleted",
 });
 
-export default async function brotherhandler(req, res) {
+export default async function handler(req, res) {
 	let response = null;
 
 	try {

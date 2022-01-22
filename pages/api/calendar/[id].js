@@ -5,7 +5,7 @@ const eventDB = new Database("Events", {
 	voidField: "deleted",
 });
 
-export default async function eventhandler(req, res) {
+export default async function handler(req, res) {
 	let response = null;
 
 	if (req.method == "GET")
