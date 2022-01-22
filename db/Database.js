@@ -23,8 +23,18 @@ export default class Database {
 		this.voidField = tempFields.voidField;
 		this.tableName = tableName;
 	}
+	#handleType(variable) {
+		return typeof variable == "string"
+			? ` '${variable}',`
+			: ` ${variable} ,`;
+	}
+
+	#popString(string) {
+		return string.substring(0, string.length - 1);
+	}
 
 	async getAll() {
+		console.log("request:\tgetall");
 		let dbResponse = await db.raw(
 			`SELECT * FROM ${this.tableName} WHERE ${this.voidField} = false ; `
 		);
@@ -32,6 +42,7 @@ export default class Database {
 	}
 
 	async getOne(id) {
+		console.log("request:\tgetone");
 		let dbResponse = await db.raw(
 			`SELECT * FROM ${this.tableName} WHERE ${
 				this.idField
@@ -40,20 +51,43 @@ export default class Database {
 		return dbResponse.records[0];
 	}
 
-	async create(body) {
-		
+	async create(data) {
+		console.log("request:\tcreate");
+
+		let valueString = "";
+		Object.keys(data).map(item => {
+			valueString += ` ${this.#handleType(data[item])}`;
+		});
+
+		valueString = this.#popString(valueString);
+
+		let fieldNames = `( `;
+		Object.keys(data).map(item => {
+			fieldNames += ` ${item},`;
+		});
+		fieldNames = this.#popString(fieldNames);
+		fieldNames += " )";
+
+		valueString = `( ${valueString} ) ;`;
+
+		let sqlString = `INSERT INTO ${this.tableName} ${fieldNames} VALUES ${valueString}`;
+
+		let dbResponse = await db.raw(sqlString);
+
+		return dbResponse;
 	}
 
 	async update(data, id) {
+		console.log("request:\tupdate");
 		if (data["id"]) delete data.id;
 
 		let sqlString = "";
 		for (let key in data) {
-			let objectValue = ` ${key} =${handleType(data[key])}`;
+			let objectValue = ` ${key} =${this.#handleType(data[key])}`;
 			sqlString += objectValue;
 		}
 
-		let sqlString2 = `UPDATE ${this.tableName} SET ${popString(
+		let sqlString2 = `UPDATE ${this.tableName} SET ${this.#popString(
 			sqlString.trim()
 		)} WHERE ${String(this.idField)} = '${String(id)}' ;`;
 
@@ -61,6 +95,7 @@ export default class Database {
 	}
 
 	async delete(id) {
+		console.log("request:\tdelete");
 		return await db.raw(
 			`UPDATE ${this.tableName} SET ${this.voidField} = true  WHERE ${
 				this.idField
@@ -71,14 +106,4 @@ export default class Database {
 	async executeSQL(sqlStatement) {
 		return await db.raw(sqlStatement);
 	}
-}
-
-function popString(string) {
-	return string.substring(0, string.length - 1);
-}
-
-function handleType(variable) {
-	return typeof variable == "string"
-		? ` '${variable}',`
-		: ` ${variable} ,`;
 }
