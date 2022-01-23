@@ -10,6 +10,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { FormTemplateComponent } from "../../../../components/form/Template";
 import { NavMenu } from "../../../../components/navbar/NavMenu";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
+import { createUser } from "../../../../redux/entities/users/user.thunks";
 
 export default function ViewBrother() {
 	const [loading, setLoading] = useState();
@@ -45,17 +46,6 @@ export default function ViewBrother() {
 
 	const validation = {};
 
-	const val = `
-	active: true
-	cell_phone: "1-365-641-0575 x59612"
-	create_date: "2022-01-01 12:57:56.533852"
-	deleted: false
-	email: "Jayden4@gmail.com"
-	id: "5976df9b-6b2c-11ec-83b3-08d23ea38422"
-	name: "person23"
-	scroll_number: 7023
-	update_date: "2022-01-01 12:57:56.533852"
-	`;
 	const FormTemplate = [
 		[
 			{
@@ -94,7 +84,16 @@ export default function ViewBrother() {
 	const handleCloseNavMenu = () => setAnchorEl(null);
 
 	const handleSubmit = values => {
-		console.log(values);
+		let formObject = values;
+		formObject.active = true;
+		dispatch(
+			createUser({
+				...formObject,
+				callback: () => {
+					router.push("/apps/brothers");
+				},
+			})
+		);
 	};
 
 	return (

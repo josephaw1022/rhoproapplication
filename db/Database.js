@@ -1,6 +1,7 @@
 // import { db } from "../utils/client-db";
 const knexDataApiClient = require("knex-data-api-client");
 import AWS from "aws-sdk";
+import { v4 as uuid } from "uuid";
 
 AWS.config.update({
 	region: "us-east-1",
@@ -32,15 +33,34 @@ export default class Database {
 		this.voidField = tempFields.voidField;
 		this.tableName = tableName;
 	}
-	#handleType(variable) {
-		return typeof variable == "string"
+
+	#handleType = variable =>
+		typeof variable == "string"
 			? ` '${variable}',`
 			: ` ${variable} ,`;
-	}
 
-	#popString(string) {
-		return string.substring(0, string.length - 1);
-	}
+	#popString = stringVariable =>
+		stringVariable.substring(0, stringVariable.length - 1);
+
+	#createID = () => String(uuid());
+
+	#removeEssentials = objectVariable => {
+		let data = objectVariable;
+		if (["id"]) delete data.id;
+		if (data["create_date"]) delete data.create_date;
+		if (data["update_date"]) delete data.update_date;
+		if (data["deleted"]) delete data.deleted;
+		return data;
+	};
+
+	#addEssentials = objectValue => {
+		let data = objectValue;
+		data.id = this.#createID();
+		data.create_date = Date();
+		data.update_date = Date();
+		data.deleted = false ; 
+		return data;
+	};
 
 	async getAll() {
 		console.log("request:\tgetall");
@@ -61,23 +81,28 @@ export default class Database {
 	}
 
 	async create(data) {
-		console.log("request:\tcreate");
+		console.log("request:\tcreate", data);
+
+		// Create the uuid for data
+		let createObject = this.#removeEssentials(data);
+		createObject = this.#addEssentials(createObject);
 
 		let valueString = "";
-		Object.keys(data).map(item => {
-			valueString += ` ${this.#handleType(data[item])}`;
+		Object.keys(createObject).map(item => {
+			valueString += ` ${this.#handleType(createObject[item])}`;
 		});
 
 		valueString = this.#popString(valueString);
 
+		valueString = `( ${valueString} ) ;`;
+
 		let fieldNames = `( `;
-		Object.keys(data).map(item => {
+		Object.keys(createObject).map(item => {
 			fieldNames += ` ${item},`;
 		});
+
 		fieldNames = this.#popString(fieldNames);
 		fieldNames += " )";
-
-		valueString = `( ${valueString} ) ;`;
 
 		let sqlString = `INSERT INTO ${this.tableName} ${fieldNames} VALUES ${valueString}`;
 
