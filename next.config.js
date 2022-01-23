@@ -1,6 +1,4 @@
 module.exports = {
-	reactStrictMode: true,
-
 	env: {
 		REGION_APP: "us-east-1",
 		CLUSTER_ARN:
