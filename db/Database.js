@@ -1,6 +1,7 @@
 // import { db } from "../utils/client-db";
 const knexDataApiClient = require("knex-data-api-client");
 import AWS from "aws-sdk";
+import { v4 as uuid } from "uuid";
 
 AWS.config.update({
 	region: "us-east-1",
@@ -34,6 +35,9 @@ export default class Database {
 	}
 	#handleType(variable) {
 		return typeof variable == "string"
+
+	#handleType = variable =>
+		typeof variable == "string"
 			? ` '${variable}',`
 			: ` ${variable} ,`;
 	}
@@ -41,6 +45,28 @@ export default class Database {
 	#popString(string) {
 		return string.substring(0, string.length - 1);
 	}
+	#popString = stringVariable =>
+		stringVariable.substring(0, stringVariable.length - 1);
+
+	#createID = () => String(uuid());
+
+	#removeEssentials = objectVariable => {
+		let data = objectVariable;
+		if (["id"]) delete data.id;
+		if (data["create_date"]) delete data.create_date;
+		if (data["update_date"]) delete data.update_date;
+		if (data["deleted"]) delete data.deleted;
+		return data;
+	};
+
+	#addEssentials = objectValue => {
+		let data = objectValue;
+		data.id = this.#createID();
+		data.create_date = Date();
+		data.update_date = Date();
+		data.deleted = false ; 
+		return data;
+	};
 
 	async getAll() {
 		console.log("request:\tgetall");
