@@ -1,7 +1,7 @@
 // import { db } from "../utils/client-db";
-const knexDataApiClient = require("knex-data-api-client");
 import AWS from "aws-sdk";
 import { v4 as uuid } from "uuid";
+const knexDataApiClient = require("knex-aurora-data-api-client");
 
 AWS.config.update({
 	region: "us-east-1",
@@ -11,8 +11,8 @@ AWS.config.update({
 	},
 });
 
-export const db = require("knex")({
-	client: knexDataApiClient,
+const db = require("knex")({
+	client: knexDataApiClient.postgres,
 	connection: {
 		secretArn: process.env.SECRET_ARN,
 		resourceArn: process.env.CLUSTER_ARN, // Required
@@ -58,7 +58,7 @@ export default class Database {
 		data.id = this.#createID();
 		data.create_date = Date();
 		data.update_date = Date();
-		data.deleted = false ; 
+		data.deleted = false;
 		return data;
 	};
 
