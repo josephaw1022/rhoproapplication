@@ -33,18 +33,12 @@ export default class Database {
 		this.voidField = tempFields.voidField;
 		this.tableName = tableName;
 	}
-	#handleType(variable) {
-		return typeof variable == "string"
 
 	#handleType = variable =>
 		typeof variable == "string"
 			? ` '${variable}',`
 			: ` ${variable} ,`;
-	}
 
-	#popString(string) {
-		return string.substring(0, string.length - 1);
-	}
 	#popString = stringVariable =>
 		stringVariable.substring(0, stringVariable.length - 1);
 
@@ -87,23 +81,28 @@ export default class Database {
 	}
 
 	async create(data) {
-		console.log("request:\tcreate");
+		console.log("request:\tcreate", data);
+
+		// Create the uuid for data
+		let createObject = this.#removeEssentials(data);
+		createObject = this.#addEssentials(createObject);
 
 		let valueString = "";
-		Object.keys(data).map(item => {
-			valueString += ` ${this.#handleType(data[item])}`;
+		Object.keys(createObject).map(item => {
+			valueString += ` ${this.#handleType(createObject[item])}`;
 		});
 
 		valueString = this.#popString(valueString);
 
+		valueString = `( ${valueString} ) ;`;
+
 		let fieldNames = `( `;
-		Object.keys(data).map(item => {
+		Object.keys(createObject).map(item => {
 			fieldNames += ` ${item},`;
 		});
+
 		fieldNames = this.#popString(fieldNames);
 		fieldNames += " )";
-
-		valueString = `( ${valueString} ) ;`;
 
 		let sqlString = `INSERT INTO ${this.tableName} ${fieldNames} VALUES ${valueString}`;
 
