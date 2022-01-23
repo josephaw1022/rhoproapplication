@@ -10,6 +10,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { FormTemplateComponent } from "../../../../components/form/Template";
 import { NavMenu } from "../../../../components/navbar/NavMenu";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
+import { createUser } from "../../../../redux/entities/users/user.thunks";
 
 export default function ViewBrother() {
 	const [loading, setLoading] = useState();
@@ -83,6 +84,16 @@ export default function ViewBrother() {
 	const handleCloseNavMenu = () => setAnchorEl(null);
 
 	const handleSubmit = values => {
+		let formObject = values;
+		formObject.active = true;
+		dispatch(
+			createUser({
+				...formObject,
+				callback: () => {
+					router.push("/apps/brothers");
+				},
+			})
+		);
 	};
 
 	return (
