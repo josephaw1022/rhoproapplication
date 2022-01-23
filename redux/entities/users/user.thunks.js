@@ -2,6 +2,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { request } from "../../../utils/request";
 
+export const createUser = createAsyncThunk(
+	"create user",
+	async ({ callback, ...payload }) => {
+		try {
+			console.log("payload = ", payload);
+			const { data } = await request.post(`/api/brothers`, payload);
+			callback(null, data);
+		} catch (err) {
+			callback(err, null);
+		}
+	}
+);
+
 export const getUsers = createAsyncThunk(
 	"users",
 	async ({ callback, ...payload }) => {
