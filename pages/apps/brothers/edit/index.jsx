@@ -45,17 +45,6 @@ export default function ViewBrother() {
 
 	const validation = {};
 
-	const val = `
-	active: true
-	cell_phone: "1-365-641-0575 x59612"
-	create_date: "2022-01-01 12:57:56.533852"
-	deleted: false
-	email: "Jayden4@gmail.com"
-	id: "5976df9b-6b2c-11ec-83b3-08d23ea38422"
-	name: "person23"
-	scroll_number: 7023
-	update_date: "2022-01-01 12:57:56.533852"
-	`;
 	const FormTemplate = [
 		[
 			{
