@@ -83,7 +83,6 @@ export default function ViewBrother() {
 	const handleCloseNavMenu = () => setAnchorEl(null);
 
 	const handleSubmit = values => {
-		console.log(values);
 	};
 
 	return (
