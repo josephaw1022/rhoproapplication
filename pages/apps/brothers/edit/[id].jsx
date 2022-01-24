@@ -1,8 +1,9 @@
 import { ArrowBack } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FormTemplateComponent } from "../../../../components/form/Template";
 import {
 	requiredEmailVal,
@@ -10,9 +11,11 @@ import {
 } from "../../../../components/form/Validations";
 import { LoadingOrError } from "../../../../components/layout/LoadingOrError";
 import { Navbar } from "../../../../components/navbar/Navbar";
-import { getBrother } from "../../../../redux/entities/users/user.thunks";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { updateBrother } from "../../../../redux/entities/users/user.thunks";
+import NavMenu from "../../../../components/navbar/NavMenu";
+import {
+	getBrother,
+	updateBrother,
+} from "../../../../redux/entities/users/user.thunks";
 
 export const BrotherEdit = ({ newEntry, ...props }) => {
 	const dispatch = useDispatch();
@@ -56,9 +59,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 		dispatch(
 			updateBrother({
 				...values,
-				callback: () => {
-					
-				},
+				callback: () => {},
 			})
 		);
 		navigate.push(`/apps/brothers/${id}`);
@@ -89,6 +90,21 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 		dispatch();
 	};
 
+		},
+		{
+			label: "Delete brother",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						deleted: true,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
+		},
+	];
+
 	return (
 		<>
 			<Navbar
@@ -100,9 +116,16 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 				}
 				suffix={
 					newEntry ? null : (
-						<IconButton onClick={handleMenuClick}>
-							<MoreVertIcon className="icon" />
-						</IconButton>
+						<>
+							<IconButton onClick={handleMenuClick}>
+								<MoreVertIcon className="icon" />
+							</IconButton>
+							<NavMenu
+								anchorEl={anchorEl}
+								handleClose={handleCloseNavMenu}
+								values={navMenuItems}
+							/>
+						</>
 					)
 				}
 			/>
