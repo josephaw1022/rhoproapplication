@@ -24,6 +24,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 	const [brother, setBrother] = useState({});
 	const [loading, setLoading] = useState(newEntry ? false : true);
 	const [error, setError] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const FormTemplate = [
 		[
 			{
@@ -86,10 +87,38 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 
 	const handleGoBack = () => navigate.push(`/apps/brothers/${id}`);
 
-	const handleMenuClick = () => {
-		dispatch();
+	const handleMenuClick = event => {
+		setAnchorEl(event.currentTarget);
 	};
 
+	const handleCloseNavMenu = () => {
+		setAnchorEl(null);
+	};
+
+	const navMenuItems = [
+		{
+			label: "Make Inactive",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						active: false,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
+		},
+		{
+			label: "Make Active",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						active: true,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
 		},
 		{
 			label: "Delete brother",
