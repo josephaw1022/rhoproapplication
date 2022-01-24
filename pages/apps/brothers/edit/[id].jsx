@@ -1,8 +1,9 @@
 import { ArrowBack } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FormTemplateComponent } from "../../../../components/form/Template";
 import {
 	requiredEmailVal,
@@ -10,9 +11,11 @@ import {
 } from "../../../../components/form/Validations";
 import { LoadingOrError } from "../../../../components/layout/LoadingOrError";
 import { Navbar } from "../../../../components/navbar/Navbar";
-import { getBrother } from "../../../../redux/entities/users/user.thunks";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { updateBrother } from "../../../../redux/entities/users/user.thunks";
+import NavMenu from "../../../../components/navbar/NavMenu";
+import {
+	getBrother,
+	updateBrother,
+} from "../../../../redux/entities/users/user.thunks";
 
 export const BrotherEdit = ({ newEntry, ...props }) => {
 	const dispatch = useDispatch();
@@ -21,6 +24,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 	const [brother, setBrother] = useState({});
 	const [loading, setLoading] = useState(newEntry ? false : true);
 	const [error, setError] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const FormTemplate = [
 		[
 			{
@@ -56,9 +60,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 		dispatch(
 			updateBrother({
 				...values,
-				callback: () => {
-					
-				},
+				callback: () => {},
 			})
 		);
 		navigate.push(`/apps/brothers/${id}`);
@@ -85,9 +87,52 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 
 	const handleGoBack = () => navigate.push(`/apps/brothers/${id}`);
 
-	const handleMenuClick = () => {
-		dispatch();
+	const handleMenuClick = event => {
+		setAnchorEl(event.currentTarget);
 	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorEl(null);
+	};
+
+	const navMenuItems = [
+		{
+			label: "Make Inactive",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						active: false,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
+		},
+		{
+			label: "Make Active",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						active: true,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
+		},
+		{
+			label: "Delete brother",
+			props: {
+				onClick: () => {
+					let tempBrother = Object.assign({}, brother, {
+						deleted: true,
+					});
+					dispatch(updateBrother({ ...tempBrother }));
+					navigate.push("/apps/brothers");
+				},
+			},
+		},
+	];
 
 	return (
 		<>
@@ -100,9 +145,16 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 				}
 				suffix={
 					newEntry ? null : (
-						<IconButton onClick={handleMenuClick}>
-							<MoreVertIcon className="icon" />
-						</IconButton>
+						<>
+							<IconButton onClick={handleMenuClick}>
+								<MoreVertIcon className="icon" />
+							</IconButton>
+							<NavMenu
+								anchorEl={anchorEl}
+								handleClose={handleCloseNavMenu}
+								values={navMenuItems}
+							/>
+						</>
 					)
 				}
 			/>
