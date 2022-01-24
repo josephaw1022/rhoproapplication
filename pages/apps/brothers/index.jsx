@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "../../../components/navbar/Navbar";
 import AppTable from "../../../components/table/Table";
 import { BrotherCols } from "../../../constants/Table";
+import LoggedIn from "../../../components/auth/LoggedIn";
 
 export default function BrotherList(props) {
 	const [drawer, setDrawer] = useState(false);
@@ -11,7 +12,7 @@ export default function BrotherList(props) {
 	const toggleDrawer = () => setDrawer(!drawer);
 
 	return (
-		<>
+		<LoggedIn>
 			<div className="h-full overflow-y-hidden overflow-x-hidden ">
 				{drawer ? null : (
 					<Navbar
@@ -35,6 +36,6 @@ export default function BrotherList(props) {
 					entity="brothers"
 				/>
 			</div>
-		</>
+		</LoggedIn>
 	);
 }
