@@ -11,7 +11,7 @@ import { FormTemplateComponent } from "../../../../components/form/Template";
 import { NavMenu } from "../../../../components/navbar/NavMenu";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { createUser } from "../../../../redux/entities/users/user.thunks";
-
+import LoggedIn from "../../../../components/auth/LoggedIn";
 export default function ViewBrother() {
 	const [loading, setLoading] = useState();
 	const [error, setError] = useState(false);
@@ -97,29 +97,31 @@ export default function ViewBrother() {
 	};
 
 	return (
-		<div className="overflow-y-hidden ">
-			<NavAndTab
-				icon={
-					<IconButton onClick={handleGoBack}>
-						<ArrowBack className="icon" />
-					</IconButton>
-				}
-				title={"Create Brother"}
-				tabs={TABS}
-				selectedTab={tab}
-				setTab={tab => setTab(tab)}
-				loading={loading}
-				error={error}
-				hideNav={true}
-			>
-				<FormTemplateComponent
-					initialValues={brother}
-					submitValue={values => handleSubmit(values)}
-					validationSchema={validation}
-					FormTemplate={FormTemplate}
-					constant={false}
-				/>
-			</NavAndTab>
-		</div>
+		<LoggedIn>
+			<div className="overflow-y-hidden ">
+				<NavAndTab
+					icon={
+						<IconButton onClick={handleGoBack}>
+							<ArrowBack className="icon" />
+						</IconButton>
+					}
+					title={"Create Brother"}
+					tabs={TABS}
+					selectedTab={tab}
+					setTab={tab => setTab(tab)}
+					loading={loading}
+					error={error}
+					hideNav={true}
+				>
+					<FormTemplateComponent
+						initialValues={brother}
+						submitValue={values => handleSubmit(values)}
+						validationSchema={validation}
+						FormTemplate={FormTemplate}
+						constant={false}
+					/>
+				</NavAndTab>
+			</div>
+		</LoggedIn>
 	);
 }

@@ -10,7 +10,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { FormTemplateComponent } from "../../../components/form/Template";
 import { NavMenu } from "../../../components/navbar/NavMenu";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
-
+import LoggedIn from "../../../components/auth/LoggedIn";
 export default function ViewBrother() {
 	const [loading, setLoading] = useState();
 	const [error, setError] = useState(false);
@@ -104,40 +104,42 @@ export default function ViewBrother() {
 	const handleSubmit = values => {};
 
 	return (
-		<div className="overflow-y-hidden">
-			<NavAndTab
-				icon={
-					<IconButton onClick={handleGoBack}>
-						<ArrowBack className="icon" />
-					</IconButton>
-				}
-				suffix={
-					<>
-						<IconButton onClick={handleMoreClick}>
-							<MoreVertIcon className="icon" />
+		<LoggedIn>
+			<div className="overflow-y-hidden">
+				<NavAndTab
+					icon={
+						<IconButton onClick={handleGoBack}>
+							<ArrowBack className="icon" />
 						</IconButton>
-						<NavMenu
-							anchorEl={anchorEl}
-							handleClose={handleCloseNavMenu}
-							values={navMenuItems}
-						/>
-					</>
-				}
-				title={"View Brother"}
-				tabs={TABS}
-				selectedTab={tab}
-				setTab={tab => setTab(tab)}
-				loading={loading}
-				error={error}
-			>
-				<FormTemplateComponent
-					initialValues={brother}
-					submitValue={values => handleSubmit(values)}
-					validationSchema={validation}
-					FormTemplate={FormTemplate}
-					constant={true}
-				/>
-			</NavAndTab>
-		</div>
+					}
+					suffix={
+						<>
+							<IconButton onClick={handleMoreClick}>
+								<MoreVertIcon className="icon" />
+							</IconButton>
+							<NavMenu
+								anchorEl={anchorEl}
+								handleClose={handleCloseNavMenu}
+								values={navMenuItems}
+							/>
+						</>
+					}
+					title={"View Brother"}
+					tabs={TABS}
+					selectedTab={tab}
+					setTab={tab => setTab(tab)}
+					loading={loading}
+					error={error}
+				>
+					<FormTemplateComponent
+						initialValues={brother}
+						submitValue={values => handleSubmit(values)}
+						validationSchema={validation}
+						FormTemplate={FormTemplate}
+						constant={true}
+					/>
+				</NavAndTab>
+			</div>
+		</LoggedIn>
 	);
 }
