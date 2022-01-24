@@ -36,6 +36,7 @@ export default function Login(props) {
 			/**
 			 * ! remove this later
 			 */
+			 sessionStorage.setItem("tdx-token", 'replace-later');
 			enqueueSnackbar("Logged in sucessfully");
 			router.push("/apps/brothers");
 			

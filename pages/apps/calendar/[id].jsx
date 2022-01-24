@@ -12,7 +12,7 @@ import { FormTemplateComponent } from "../../../components/form/Template";
 import { NavAndTab } from "../../../components/layout/NavAndTab";
 import NavMenu from "../../../components/navbar/NavMenu";
 import { getEvent } from "../../../redux/entities/calendar/calendar.thunks";
-
+import LoggedIn from "../../../components/auth/LoggedIn";
 export default function ViewEvent() {
 	const [loading, setLoading] = useState();
 	const [error, setError] = useState(false);
@@ -99,40 +99,42 @@ export default function ViewEvent() {
 	const handleSubmit = values => {};
 
 	return (
-		<div className="overflow-y-hidden ">
-			<NavAndTab
-				icon={
-					<IconButton onClick={handleGoBack}>
-						<ArrowBack className="icon" />
-					</IconButton>
-				}
-				suffix={
-					<>
-						<IconButton onClick={handleMoreClick}>
-							<MoreVertIcon className="icon" />
+		<LoggedIn>
+			<div className="overflow-y-hidden ">
+				<NavAndTab
+					icon={
+						<IconButton onClick={handleGoBack}>
+							<ArrowBack className="icon" />
 						</IconButton>
-						<NavMenu
-							anchorEl={anchorEl}
-							handleClose={handleCloseNavMenu}
-							values={navMenuItems}
-						/>
-					</>
-				}
-				title={"View Event"}
-				tabs={TABS}
-				selectedTab={tab}
-				setTab={tab => setTab(tab)}
-				loading={loading}
-				error={error}
-			>
-				<FormTemplateComponent
-					initialValues={event}
-					submitValue={values => handleSubmit(values)}
-					validationSchema={validation}
-					FormTemplate={FormTemplate}
-					constant={true}
-				/>
-			</NavAndTab>
-		</div>
+					}
+					suffix={
+						<>
+							<IconButton onClick={handleMoreClick}>
+								<MoreVertIcon className="icon" />
+							</IconButton>
+							<NavMenu
+								anchorEl={anchorEl}
+								handleClose={handleCloseNavMenu}
+								values={navMenuItems}
+							/>
+						</>
+					}
+					title={"View Event"}
+					tabs={TABS}
+					selectedTab={tab}
+					setTab={tab => setTab(tab)}
+					loading={loading}
+					error={error}
+				>
+					<FormTemplateComponent
+						initialValues={event}
+						submitValue={values => handleSubmit(values)}
+						validationSchema={validation}
+						FormTemplate={FormTemplate}
+						constant={true}
+					/>
+				</NavAndTab>
+			</div>
+		</LoggedIn>
 	);
 }

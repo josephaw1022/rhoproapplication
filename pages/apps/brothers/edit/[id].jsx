@@ -16,7 +16,7 @@ import {
 	getBrother,
 	updateBrother,
 } from "../../../../redux/entities/users/user.thunks";
-
+import LoggedIn from "../../../../components/auth/LoggedIn";
 export const BrotherEdit = ({ newEntry, ...props }) => {
 	const dispatch = useDispatch();
 	const navigate = useRouter();
@@ -135,7 +135,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 	];
 
 	return (
-		<>
+		<LoggedIn>
 			<Navbar
 				title={newEntry ? "Create Brother" : "Edit Brother"}
 				icon={
@@ -166,7 +166,7 @@ export const BrotherEdit = ({ newEntry, ...props }) => {
 					FormTemplate={FormTemplate}
 				/>
 			</LoadingOrError>
-		</>
+		</LoggedIn>
 	);
 };
 
