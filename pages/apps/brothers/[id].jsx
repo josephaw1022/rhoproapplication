@@ -30,10 +30,10 @@ export default function ViewBrother() {
 			),
 		},
 		{
-			label: "Merits",
+			label: "Merits / Demerits",
 			icon: (
 				<FolderSpecialIcon
-					className={tab === "Merits" ? "icon" : null}
+					className={tab === "Merits / Demerits" ? "icon" : null}
 				/>
 			),
 		},
@@ -104,7 +104,7 @@ export default function ViewBrother() {
 	const handleSubmit = values => {};
 
 	return (
-		<div className="overflow-y-hidden ">
+		<div className="overflow-y-hidden">
 			<NavAndTab
 				icon={
 					<IconButton onClick={handleGoBack}>
