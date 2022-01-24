@@ -1,13 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { LoadingOrError } from "../layout/LoadingOrError";
+import { useSnackbar } from "notistack";
 
 export default function LoggedIn(props) {
-	const router = useRouter();
+	const [loading, setLoading] = useState(true);
+	const { enqueueSnackbar } = useSnackbar();
 
+	const router = useRouter();
 	useEffect(() => {
 		const authToken = sessionStorage.getItem("tdx-token");
-		if (authToken != "replace-later") router.push("/");
+		if (authToken != "replace-later") {
+			enqueueSnackbar("Must login");
+			router.push("/");
+		}
+		setLoading(false);
 	}, []);
 
-	return props.children;
+	return (
+		<LoadingOrError error={false} loading={loading}>
+			{props.children}
+		</LoadingOrError>
+	);
 }
