@@ -22,14 +22,9 @@ This is where we define our tables for our database
 - dues
 `;
 
-const brother_fields = [ 
+const brother_fields = [];
 
-]
-
-const event_fields = [ 
-
-]
-
+const event_fields = [];
 
 const account_fields = [
 	...shared_fields,
@@ -37,11 +32,9 @@ const account_fields = [
 	DbTable.field("active", bool),
 ];
 
-
-
 module.exports = {
-	brother_fields, 
-	event_fields, 
+	brother_fields,
+	event_fields,
 	account_fields,
 	shared_fields,
 };
