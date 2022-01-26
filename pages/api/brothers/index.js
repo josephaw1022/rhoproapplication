@@ -1,4 +1,4 @@
-import Database from "../../../db/Database";
+import Database from "../../../utils/aurora_postgres_db";
 
 const brotherDB = new Database("brothers", {
 	idField: "id",
@@ -13,6 +13,6 @@ export default async function handler(req, res) {
 	}
 
 	if (req.method == "GET") response = await brotherDB.getAll();
-  
+
 	res.status(200).json(response);
 }
