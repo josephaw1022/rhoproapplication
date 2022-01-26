@@ -16,15 +16,16 @@ class DbTable {
 	createSQL() {
 		let fieldString = ``;
 		this.fields.forEach(
-			item => (fieldString += this.#makeSqlStringFromObject(item))
+			item =>
+				(fieldString += this.#makeSqlStringFromObject(item).trim())
 		);
-		fieldString = this.#popString(fieldString);
+		fieldString = this.#popString(fieldString).trim();
 
-		let sqlString = `CREATE ${this.tableName} ( 
-            ${fieldString}
-        ) ;`;
+		let sqlString = `CREATE TABLE ${this.tableName} (  ${fieldString} ) ;`
+			.trim()
+			.replace("\n", " ");
 
-		return sqlString;
+		return sqlString.trim();
 	}
 
 	/**
@@ -61,9 +62,7 @@ class DbTable {
 	 */
 	#makeSqlStringFromObject = sqlObject => {
 		const pkString = sqlObject.primary_key ? "PRIMARY_KEY" : "";
-		const sqlString = `\n${sqlObject.field_name} ${this.#handleType(
-			sqlObject.field_type
-		)} ${pkString} ,`;
+		const sqlString = `${sqlObject.field_name} ${this.#handleType( sqlObject.field_type)} ${pkString} ,`;
 
 		return sqlString;
 	};

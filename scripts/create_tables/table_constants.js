@@ -6,7 +6,7 @@ const bool = "boolean";
 const lstr = "long_string";
 
 const shared_fields = [
-	DbTable.field("id", str, true),
+	DbTable.field("id", str),
 	DbTable.field("create_date", str),
 	DbTable.field("update_date", str),
 	DbTable.field("deleted", bool),
@@ -30,6 +30,7 @@ const account_fields = [
 	...shared_fields,
 	DbTable.field("brother_id", str),
 	DbTable.field("active", bool),
+	DbTable.field("password", lstr),
 ];
 
 module.exports = {
