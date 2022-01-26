@@ -1,4 +1,4 @@
-import Database from "../../../db/Database";
+import Database from "../../../utils/aurora_postgres_db";
 
 const brotherDB = new Database("brothers", {
 	idField: "id",
