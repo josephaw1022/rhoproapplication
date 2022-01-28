@@ -1,28 +1,8 @@
 require("dotenv").config();
-const AWS = require("aws-sdk");
-const knexDataApiClient = require("knex-aurora-data-api-client");
 
 const DbTable = require("./Table");
 const Fields = require("./table_constants");
-
-AWS.config.update({
-  region: "us-east-1",
-
-  credentials: {
-    accessKeyId: String(process.env.AWS_ACCESS_KEY_APP),
-    secretAccessKey: String(process.env.AWS_SECRET_ACCESS_KEY_APP),
-  },
-});
-
-const db = require("knex")({
-  client: knexDataApiClient.postgres,
-  connection: {
-    secretArn: String(process.env.SECRET_ARN),
-    resourceArn: String(process.env.CLUSTER_ARN), // Required
-    database: String(process.env.DB_NAME),
-    region: String(process.env.REGION_APP),
-  },
-});
+const db = require("./db_client");
 
 const createTable = async dbTableInstance => {
   await db
@@ -38,7 +18,21 @@ const deleteTable = async dbTableInstance => {
     .catch(error => DbTable.handleError(error));
 };
 
+// database tables
 const accountDB = new DbTable("accounts", Fields.account_fields);
+const jobDB = new DbTable("jobs", Fields.job_fields);
 
-// createTable(accountDB);
-deleteTable(accountDB)
+/**
+ *  Account DB
+ */
+
+// createTable(accountDB)
+// deleteTable(accountDB)
+
+
+/**
+ * Job DB 
+ */
+
+// createTable(jobDB);
+// deleteTable(jobDB)
