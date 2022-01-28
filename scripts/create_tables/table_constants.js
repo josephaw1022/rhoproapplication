@@ -34,7 +34,9 @@ const job_fields = [
 const emergency_contact_field = [
   ...shared_fields, 
   DB.field("emergency_contact_name", lstr), 
-  DB.field("emergency_contact_number", lstr)
+  DB.field("emergency_contact_number", lstr), 
+  DB.field("brother_id", lstr), 
+  DB.field("comments", lstr)
 ]
 
 
@@ -42,4 +44,5 @@ module.exports = {
   account_fields,
   shared_fields,
   job_fields, 
+  emergency_contact_field, 
 };
