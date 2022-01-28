@@ -1,41 +1,34 @@
 const DbTable = require("./Table");
 
+// types of variables
 const str = "string";
 const numb = "number";
 const bool = "boolean";
 const lstr = "long_string";
 
+// Fields included in every entity
 const shared_fields = [
-	DbTable.field("id", str),
-	DbTable.field("create_date", str),
-	DbTable.field("update_date", str),
-	DbTable.field("deleted", bool),
+  DbTable.field("id", str),
+  DbTable.field("create_date", str),
+  DbTable.field("update_date", str),
+  DbTable.field("deleted", bool),
 ];
 
-let comment = `
 
-This is where we define our tables for our database 
-- brothers 
-- events 
-- accounts 
-- permissions 
-- dues
-`;
 
-const brother_fields = [];
-
-const event_fields = [];
-
+// account fields 
 const account_fields = [
-	...shared_fields,
-	DbTable.field("brother_id", str),
-	DbTable.field("active", bool),
-	DbTable.field("password", lstr),
+  ...shared_fields,
+  DbTable.field("brother_id", str),
+  DbTable.field("active", bool),
+  DbTable.field("password", lstr),
 ];
+
+
+
+
 
 module.exports = {
-	brother_fields,
-	event_fields,
-	account_fields,
-	shared_fields,
+  account_fields,
+  shared_fields,
 };
