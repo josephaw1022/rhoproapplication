@@ -21,6 +21,7 @@ const deleteTable = async dbTableInstance => {
 // database tables
 const accountDB = new DbTable("accounts", Fields.account_fields);
 const jobDB = new DbTable("jobs", Fields.job_fields);
+const emergencyContactDB = new DbTable("emergency_contacts", Fields.emergency_contact_field) 
 
 /**
  *  Account DB
@@ -36,3 +37,12 @@ const jobDB = new DbTable("jobs", Fields.job_fields);
 
 // createTable(jobDB);
 // deleteTable(jobDB)
+
+
+
+/**
+ * Emergency Contact DB
+ */
+
+// createTable(emergencyContactDB)
+// deleteTable(emergencyContactDB)
