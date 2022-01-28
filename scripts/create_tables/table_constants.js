@@ -1,4 +1,4 @@
-const DbTable = require("./Table");
+const DB = require("./Table");
 
 // types of variables
 const str = "string";
@@ -8,27 +8,41 @@ const lstr = "long_string";
 
 // Fields included in every entity
 const shared_fields = [
-  DbTable.field("id", str),
-  DbTable.field("create_date", str),
-  DbTable.field("update_date", str),
-  DbTable.field("deleted", bool),
+  DB.field("id", str),
+  DB.field("create_date", str),
+  DB.field("update_date", str),
+  DB.field("deleted", bool),
 ];
 
-
-
-// account fields 
+// fields for the account table 
 const account_fields = [
   ...shared_fields,
-  DbTable.field("brother_id", str),
-  DbTable.field("active", bool),
-  DbTable.field("password", lstr),
+  DB.field("brother_id", str),
+  DB.field("active", bool),
+  DB.field("password", lstr),
 ];
 
 
+// fields the job table 
+const job_fields = [
+  ...shared_fields,
+  DB.field("job", lstr),
+  DB.field("event_id", lstr),
+  DB.field("brother_id", lstr),
+];
 
+const emergency_contact_field = [
+  ...shared_fields, 
+  DB.field("emergency_contact_name", lstr), 
+  DB.field("emergency_contact_number", lstr), 
+  DB.field("brother_id", lstr), 
+  DB.field("comments", lstr)
+]
 
 
 module.exports = {
   account_fields,
   shared_fields,
+  job_fields, 
+  emergency_contact_field, 
 };

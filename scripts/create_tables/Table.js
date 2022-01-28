@@ -84,21 +84,18 @@ class DbTable {
    */
   deleteTable = () => `DROP TABLE ${this.tableName} ; `;
 
-
-
   /**
-   * handleResponse - console logs the RDS response in a formmated string 
-   * @param {String} rdsResponse 
+   * handleResponse - console logs the RDS response in a formmated string
+   * @param {String} rdsResponse
    */
   static handleResponse = rdsResponse => {
     console.clear();
     console.log("\n\n\nResponse:\t", rdsResponse, "\n\n\n\n\n\n");
   };
 
-
   /**
-   * handleError - console logs the RDS error response in a formatted string  
-   * @param {String} rdsErrorResponse 
+   * handleError - console logs the RDS error response in a formatted string
+   * @param {String} rdsErrorResponse
    */
   static handleError = rdsErrorResponse => {
     console.clear();
