@@ -1,5 +1,5 @@
 
-
+require("dotenv").config();
 const AWS = require("aws-sdk");
 const knexDataApiClient = require("knex-aurora-data-api-client");
 
