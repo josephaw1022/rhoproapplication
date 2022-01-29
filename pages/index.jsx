@@ -15,7 +15,7 @@ import { Navbar } from "../components/navbar/Navbar";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
-export default function Login(props) {
+export default function Login(props) { 
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
