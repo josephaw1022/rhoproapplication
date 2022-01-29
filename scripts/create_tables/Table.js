@@ -85,6 +85,12 @@ class DbTable {
   deleteTable = () => `DROP TABLE ${this.tableName} ; `;
 
   /**
+   * truncateTable - creates the sql to truncate the table
+   * @returns sql
+   */
+  truncateTable = () => `TRUNCATE TABLE ${this.tableName} ; `;
+
+  /**
    * handleResponse - console logs the RDS response in a formmated string
    * @param {String} rdsResponse
    */
