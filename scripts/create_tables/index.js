@@ -18,12 +18,32 @@ const deleteTable = async dbTableInstance => {
     .catch(error => DbTable.handleError(error));
 };
 
+const truncateTable = async dbInstance => {
+  await db
+    .raw(dbInstance.truncateTable())
+    .then(response => DbTable.handleResponse(response))
+    .catch(error => DbTable.handleError(error));
+};
+
 // database tables
 const accountDB = new DbTable("accounts", Fields.account_fields);
 const jobDB = new DbTable("jobs", Fields.job_fields);
-const emergencyContactDB = new DbTable("emergency_contacts", Fields.emergency_contact_fields) 
-const meritDB = new DbTable("merits", Fields.merit_fields)
-const demeritDB = new DbTable("demerits", Fields.demerit_fields) 
+const emergencyContactDB = new DbTable(
+  "emergency_contacts",
+  Fields.emergency_contact_fields
+);
+const meritDB = new DbTable("merits", Fields.merit_fields);
+const demeritDB = new DbTable("demerits", Fields.demerit_fields);
+
+
+
+/**
+Event Table
+
+*/
+
+
+
 
 
 /**
@@ -33,15 +53,12 @@ const demeritDB = new DbTable("demerits", Fields.demerit_fields)
 // createTable(accountDB)
 // deleteTable(accountDB)
 
-
 /**
- * Job Table 
+ * Job Table
  */
 
-createTable(jobDB);
+// createTable(jobDB);
 // deleteTable(jobDB)
-
-
 
 /**
  * Emergency Contact Table
@@ -50,12 +67,11 @@ createTable(jobDB);
 // createTable(emergencyContactDB)
 // deleteTable(emergencyContactDB)
 
-
-/** 
+/**
  *  Merit / Demerit Tables
  */
 
-createTable(meritDB)
+// createTable(meritDB)
 // deleteTable(meritDB)
-createTable(demeritDB)
+// createTable(demeritDB)
 // deleteTable(demeritDB)
