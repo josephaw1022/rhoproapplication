@@ -47,7 +47,7 @@ const permissionDB = new DbTable("permissions",Fields.permission_fields);
 
 // createTable(accountDB)
 // deleteTable(accountDB)
-truncateTable(accountDB)
+// truncateTable(accountDB)
 
 /**
  * Job Table
