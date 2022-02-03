@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 import { v4 as uuid } from "uuid";
 const knexDataApiClient = require("knex-aurora-data-api-client");
-
+import moment from 'moment'
 
 AWS.config.update({
 	region: "us-east-1",
@@ -53,11 +53,17 @@ export default class Database {
 		return data;
 	};
 
+	#formatDateTimeForDB(datestr) {
+		if (!datestr) return datestr;
+		let date =  moment.utc(datestr, moment.ISO_8601);
+		return String(date.format("YYYY-MM-DD HH:mm:ss"));
+	  }
+
 	#addEssentials = objectValue => {
 		let data = objectValue;
 		data.id = this.#createID();
-		data.create_date = Date();
-		data.update_date = Date();
+		data.create_date = this.#formatDateTimeForDB(moment())
+		data.update_date = this.#formatDateTimeForDB(moment())
 		data.deleted = false;
 		return data;
 	};
@@ -105,7 +111,7 @@ export default class Database {
 		fieldNames += " )";
 
 		let sqlString = `INSERT INTO ${this.tableName} ${fieldNames} VALUES ${valueString}`;
-
+		// console.log(sqlString) 
 		let dbResponse = await db.raw(sqlString);
 
 		return dbResponse;
