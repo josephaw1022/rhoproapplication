@@ -54,6 +54,9 @@ class DbTable {
     if (type == "number") return "INT";
     if (type == "boolean") return "BOOLEAN";
     if (type == "long_string") return "TEXT";
+    if(type == "datetime") return "TIMESTAMP"; 
+    if(type=="date") return "DATE"; 
+    if(type=="time") return "TIME"
   };
 
   /**
