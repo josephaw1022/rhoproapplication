@@ -5,9 +5,10 @@ const str = "string";
 const numb = "number";
 const bool = "boolean";
 const lstr = "long_string";
-const dt = "datetime"
-const d = "date"
-const t = 'time' 
+const dt = "datetime";
+const d = "date";
+const t = "time";
+
 // Fields included in every entity
 const shared_fields = [
   DBTable.field("id", str),
@@ -78,16 +79,16 @@ const demerit_fields = [
   DBTable.field("creator_id", lstr),
 ];
 
-
+// fields for the events table
 const event_fields = [
-  ...shared_fields, 
-  DBTable.field("name", lstr), 
-  DBTable.field("start_time",t ), 
-  DBTable.field("end_time",t ), 
-  DBTable.field("date", d), 
-  DBTable.field("location", lstr), 
-  DBTable.field("creator_id", lstr)
-]
+  ...shared_fields,
+  DBTable.field("name", lstr),
+  DBTable.field("start_time", t),
+  DBTable.field("end_time", t),
+  DBTable.field("date", d),
+  DBTable.field("location", lstr),
+  DBTable.field("creator_id", lstr),
+];
 
 module.exports = {
   brother_fields,
@@ -98,5 +99,5 @@ module.exports = {
   merit_fields,
   demerit_fields,
   permission_fields,
-  event_fields, 
+  event_fields,
 };

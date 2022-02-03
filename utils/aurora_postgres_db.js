@@ -1,7 +1,7 @@
-import AWS from "aws-sdk";
-import { v4 as uuid } from "uuid";
 const knexDataApiClient = require("knex-aurora-data-api-client");
-import moment from 'moment'
+const AWS = require('aws-sdk')
+const {v4:uuid} = require('uuid')
+const moment = require('moment')
 
 AWS.config.update({
 	region: "us-east-1",

@@ -1,4 +1,4 @@
-const AuroraDB = require("../db_client");
+const {db:AuroraDB} = require("../db_client");
 const CommonFields = require("./utils/handle_common_fields");
 const PostItem = require("./utils/post_item");
 
