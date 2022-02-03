@@ -8,8 +8,8 @@ AWS.config.update({
   region: "us-east-1",
 
   credentials: {
-    accessKeyId: String(process.env.AWS_ACCESS_KEY_APP),
-    secretAccessKey: String(process.env.AWS_SECRET_ACCESS_KEY_APP),
+    accessKeyId: String(process.env.AWS_AK_APP),
+    secretAccessKey: String(process.env.AWS_SK_APP),
   },
 });
 
