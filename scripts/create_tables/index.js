@@ -33,6 +33,7 @@ const emergencyContactDB = new DbTable("emergency_contacts",Fields.emergency_con
 const meritDB = new DbTable("merits", Fields.merit_fields);
 const demeritDB = new DbTable("demerits", Fields.demerit_fields);
 const permissionDB = new DbTable("permissions",Fields.permission_fields);
+const eventDB = new DbTable("events", Fields.event_fields)
 
 /**
  * Brother Table
@@ -79,3 +80,13 @@ const permissionDB = new DbTable("permissions",Fields.permission_fields);
 // createTable(permissionDB)
 // deleteTable(permissionDB)
 // truncateTable(permissionDB)
+
+
+/**
+ * Permissions Fields
+ */
+
+ createTable(eventDB)
+//  deleteTable(eventDB)
+ // truncateTable(eventDB)
+ 
