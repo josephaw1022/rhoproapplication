@@ -1,7 +1,7 @@
 import Database from "../../../utils/aurora_postgres_db";
 
-const db = new Database("jobs", {
-	idField: "event_id",
+const db = new Database("permissions", {
+	idField: "id",
 	voidField: "deleted",
 });
 

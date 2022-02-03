@@ -1,8 +1,8 @@
 const CommonFields = require("./utils/handle_common_fields");
 const PostItem = require("./utils/post_item");
-const AuroraDB = require(`../db_client`);
+const {handleSQLRequest} = require("../db_client")
 
-const createAccount = (index, brother_id) => {
+const createItem = (index, brother_id) => {
   return {
     ...CommonFields(),
     brother_id,
@@ -11,19 +11,23 @@ const createAccount = (index, brother_id) => {
 };
 
 const main = async () => {
-  await AuroraDB.raw(` SELECT id FROM brothers ; `)
-    .then(resp => resp.records)
+  try { 
+    let idList = await handleSQLRequest(` SELECT id FROM brothers ; `)
     .then(list => list.map(listItem => listItem.id))
-    .then(idList => {
-      let accountList = [];
 
-      idList.map((brotherID, index) =>
-        accountList.push(createAccount(index, brotherID))
-      );
+    let list = [];
 
-      accountList.map(account => PostItem(account, "accounts"));
-    })
-    .catch(error => console.log(error));
+    idList.map((brotherID, index) =>
+      list.push(createItem(index, brotherID))
+    );
+
+    list.map(account => PostItem(account, "accounts"));
+    
+  
+  } 
+    catch(error){ 
+      console.log(error)
+    }
 };
 
 main();

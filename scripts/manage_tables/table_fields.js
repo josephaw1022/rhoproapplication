@@ -5,12 +5,15 @@ const str = "string";
 const numb = "number";
 const bool = "boolean";
 const lstr = "long_string";
+const dt = "datetime";
+const d = "date";
+const t = "time";
 
 // Fields included in every entity
 const shared_fields = [
   DBTable.field("id", str),
-  DBTable.field("create_date", str),
-  DBTable.field("update_date", str),
+  DBTable.field("create_date", dt),
+  DBTable.field("update_date", dt),
   DBTable.field("deleted", bool),
 ];
 
@@ -59,7 +62,7 @@ const emergency_contact_fields = [
 // fields for the merits table
 const merit_fields = [
   ...shared_fields,
-  DBTable.field("date", lstr),
+  DBTable.field("date", d),
   DBTable.field("reason", lstr),
   DBTable.field("comments", lstr),
   DBTable.field("brother_id", lstr),
@@ -69,10 +72,21 @@ const merit_fields = [
 // fields for the merits table
 const demerit_fields = [
   ...shared_fields,
-  DBTable.field("date", lstr),
+  DBTable.field("date", d),
   DBTable.field("reason", lstr),
   DBTable.field("comments", lstr),
   DBTable.field("brother_id", lstr),
+  DBTable.field("creator_id", lstr),
+];
+
+// fields for the events table
+const event_fields = [
+  ...shared_fields,
+  DBTable.field("name", lstr),
+  DBTable.field("start_time", t),
+  DBTable.field("end_time", t),
+  DBTable.field("date", d),
+  DBTable.field("location", lstr),
   DBTable.field("creator_id", lstr),
 ];
 
@@ -85,4 +99,5 @@ module.exports = {
   merit_fields,
   demerit_fields,
   permission_fields,
+  event_fields,
 };

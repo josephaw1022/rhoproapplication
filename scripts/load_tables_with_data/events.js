@@ -1,64 +1,45 @@
-const faker = require("faker");
-const uuid = require("uuid");
-const axios = require("axios");
-const moment = require("moment");
 const AuroraDB = require("../db_client");
+const CommonFields = require("./utils/handle_common_fields");
+const PostItem = require("./utils/post_item");
+const moment = require("moment");
 
-const truncateEventTable = async () =>
-  await AuroraDB.raw("TRUNCATE TABLE events ; ")
-    .then(resp => console.log(resp))
-    .catch(error => console.error(error));
-
-const makeFakeEvent = (index, listOfIDs) => {
-  const randomItem = list =>
-    list[Math.floor(Math.random() * list.length)];
-  const start_time = moment()
-    .add(Math.floor(Math.random() * 4), "h")
-    .add(Math.floor(Math.random() * 40), "m");
+const createEvent = (index, id) => {
+  const time = moment().add(Math.floor(Math.random() * 12), "h");
+  const start_time = time.clone().format("h:mm:ss");
+  const end_time = time
+    .clone()
+    .add(Math.random() * 3, "h")
+    .format("h:mm:ss");
+  const day = moment()
+    .add(Math.floor(Math.random(400, "d")))
+    .format("L");
 
   return {
-    creator_id: String(randomItem(listOfIDs)),
-    id: uuid.v4(),
-    date: moment()
-      .add(Number(Math.floor(Math.random() * 400)), "d")
-      .format("L"),
-    start_time: start_time.format("LT"),
-    end_time: start_time
-      .add(Math.floor(Math.random() * 4), "h")
-      .format("LT"),
-    name: `event_${index}`,
-    location: `location_${index}`,
-    comments: "",
+    ...CommonFields(),
+    name: `Event ${index}`,
+    start_time,
+    end_time,
+    date: day,
+    location: `location ${index}`,
+    creator_id: id,
   };
 };
 
-const postEvent = async item => {
-  await axios
-    .post("http://localhost:3000/api/calendar", item)
-    .then(resp => console.log(resp))
-    .catch(error => console.error(error));
-};
-
-
-
-
 const main = async () => {
-  await truncateEventTable();
-
-  const listOfIDs = await AuroraDB.raw(
-    `SELECT DISTINCT id from brothers ; `
+  const response = await AuroraDB.raw(
+    "SELECT id FROM brothers WHERE ( deleted = false )"
   )
-    .then(apiResponse => apiResponse.records)
-    .then(records => records.map(item => item.id))
-    .catch(error => console.log(error));
+    .then(resp => resp.records)
+    .then(items => items.map(item => item.id));
 
-  let list_of_events = [];
-
-  for (let i = 0; i < 100; i++) {
-    let fakeEvent = await makeFakeEvent(i, listOfIDs);
-    list_of_events.push(fakeEvent);
+  let listOfEvents = [];
+  for (let i = 0; i < 160; i++) {
+    let randomID =
+      response[Math.floor(Math.random() * response.length - 1)];
+    listOfEvents.push(createEvent(i, randomID));
   }
-  list_of_events.map(event => postEvent(event));
+  // console.log(listOfEvents)
+  for (let i = 0; i < 160; i++) PostItem(listOfEvents[i], "calendar");
 };
 
 main();
