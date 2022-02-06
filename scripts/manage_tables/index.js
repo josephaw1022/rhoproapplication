@@ -31,3 +31,4 @@ const truncateAllTables = async () => all_tables.map(item => item.truncateTable(
 // createAllTables()
 // deleteAllTables()
 // truncateAllTables()
+jobTable.truncateTable()

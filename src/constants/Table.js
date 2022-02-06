@@ -41,6 +41,6 @@ export const EventCols = [
 ];
 
 export const JobCols = [
-    { field: "brotherName", headerName: "Brother" },
+    { field: "name", headerName: "Brother" },
     { field: "job", headerName: "Job" },
 ];

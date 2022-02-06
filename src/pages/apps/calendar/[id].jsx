@@ -13,6 +13,7 @@ import { NavAndTab } from "../../../components/layout/NavAndTab";
 import NavMenu from "../../../components/navbar/NavMenu";
 import { getEvent } from "../../../redux/entities/calendar/calendar.thunks";
 import LoggedIn from "../../../components/auth/LoggedIn";
+
 export default function ViewEvent() {
 	const [loading, setLoading] = useState();
 	const [error, setError] = useState(false);
@@ -35,7 +36,7 @@ export default function ViewEvent() {
 			label: "Jobs",
 			icon: <WorkIcon className={tab == "Jobs" ? "icon" : null} />,
 			onClick: () => {
-				router.push("jobs");
+				router.push(`/apps/jobs_for_events/${id}`);
 			},
 		},
 	];

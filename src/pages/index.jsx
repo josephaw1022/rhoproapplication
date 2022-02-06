@@ -2,7 +2,6 @@ import { Card, CardActions, CardContent } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { PrimaryButton } from "../components/button/PrimaryButton";
 import { TextInput } from "../components/form/Field";
@@ -16,7 +15,6 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
 export default function Login(props) { 
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const { enqueueSnackbar } = useSnackbar();

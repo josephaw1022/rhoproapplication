@@ -23,7 +23,8 @@ const db = require("knex")({
 });
 const defaultFields = {
 	idField: "id",
-	voidField: "pvVoid",
+	voidField: "deleted",
+	getField:"id", 
 };
 
 export default class Database {
@@ -31,6 +32,7 @@ export default class Database {
 		const tempFields = Object.assign({}, defaultFields, fields);
 		this.idField = tempFields.idField;
 		this.voidField = tempFields.voidField;
+		this.getField = tempFields.getField ; 
 		this.tableName = tableName;
 	}
 
@@ -80,7 +82,7 @@ export default class Database {
 		console.log("request:\tgetone");
 		let dbResponse = await db.raw(
 			`SELECT * FROM ${this.tableName} WHERE ${
-				this.idField
+				this.getField
 			} = '${String(id)}'`
 		);
 		return dbResponse.records[0];
@@ -147,3 +149,26 @@ export default class Database {
 		return await db.raw(sqlStatement);
 	}
 }
+
+
+
+function handleResponse(rdsResponse){
+	console.clear();
+	console.log("\n\n\nResponse:\t", rdsResponse, "\n\n\n\n\n\n");
+	return rdsResponse;
+  }
+  
+  function handleError(rdsErrorResponse){
+	console.clear();
+	console.log("\n\n\nError:\t", rdsErrorResponse, "\n\n\n\n\n\n");
+	return rdsErrorResponse;
+  }
+  
+  export async function handleSQLRequest(sqlString) {
+	let response = await db.raw(sqlString)
+	  .then(response => response.records)
+	  .then(records => handleResponse(records))
+	  .catch(error => handleError(error))
+	return response;
+  }
+  
